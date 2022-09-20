@@ -5,6 +5,8 @@ services:
     container_name: "recipe-api-backend"
     build:
       context: .
+      args:
+        - DEV=true
     ports:
       - "8000:8000"
     volumes:
