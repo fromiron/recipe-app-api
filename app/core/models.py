@@ -2,19 +2,22 @@
 db models
 """
 
-from django.db import models
 from django.contrib.auth.models import (
-AbstractBaseUser, BaseUserManager, PermissionsMixin
+    AbstractBaseUser, BaseUserManager, PermissionsMixin
 )
+from django.db import models
+
 
 class UserManager(BaseUserManager):
     """manager for users"""
+
     def create_user(self, email, password=None, **extra_fields):
         """create, save and return a new user"""
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
-        user.save(self._db)
+        user.save(using=self._db)
         return user
+
 
 class User(AbstractBaseUser, PermissionsMixin):
     """user in the system"""
@@ -22,5 +25,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+
+    objects = UserManager()
 
     USERNAME_FIELD = 'email'

@@ -1,8 +1,8 @@
 """
 tests for models
 """
-from django.contrib.auth import get_user_model
 from django.test import TestCase
+from django.contrib.auth import get_user_model
 
 
 class ModelTests(TestCase):
@@ -18,4 +18,4 @@ class ModelTests(TestCase):
         )
 
         self.assertEqual(user.email, email)
-        self.assertTrue(user.check_possword(password))
+        self.assertTrue(user.check_password(password))
