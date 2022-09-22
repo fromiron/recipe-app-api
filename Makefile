@@ -15,3 +15,9 @@ lint:
 
 cmd:
 	docker-compose run --rm app sh -c "$(c)"
+
+pmd:
+	docker-compose run --rm app sh -c "python manage.py $(c)"
+
+activate:
+	source .venv/bin/activate
