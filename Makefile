@@ -18,3 +18,6 @@ cmd:
 
 pmd:
 	docker-compose run --rm app sh -c "python manage.py $(c)"
+
+flake:
+	docker-compose run --rm app sh -c "flake8"
