@@ -244,7 +244,7 @@ class PrivateRecipeApiTests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         new_tag = Tag.objects.get(user=self.user, name='Lunch')
-        self.assertEqual(new_tag, recipe.tags.all())
+        self.assertEqual(new_tag, recipe.tags.all()[0])
 
     def test_update_recipe_assign_tag(self):
         """test assigning an existing tag when updating a recipe"""
