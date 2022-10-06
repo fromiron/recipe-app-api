@@ -34,7 +34,8 @@ class TagViewSet(
     mixins.DestroyModelMixin,
     mixins.UpdateModelMixin,
     mixins.ListModelMixin,
-    viewsets.GenericViewSet):
+    viewsets.GenericViewSet
+):
     """manage tags in the database"""
     serializer_class = serializers.TagSerializer
     queryset = Tag.objects.all()
