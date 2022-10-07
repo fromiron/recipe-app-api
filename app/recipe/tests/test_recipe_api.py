@@ -136,11 +136,11 @@ class PrivateRecipeApiTests(TestCase):
             description='Sample recipe description'
         )
         payload = {
-            'title': 'New recipe title',
+            'title': 'new recipe title',
             'link': 'https://example.com/new-recipe.pdf',
-            'description': 'New recipe description',
+            'description': 'new recipe description',
             'time_minutes': 10,
-            'price': Decimal('2.50'),
+            'price': Decimal('2.50')
         }
         url = detail_url(recipe.id)
         res = self.client.put(url, payload)
