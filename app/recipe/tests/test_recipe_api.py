@@ -335,7 +335,6 @@ class PrivateRecipeApiTests(TestCase):
         payload = {'ingredients': [{'name': 'Chili'}]}
         url = detail_url(recipe.id)
         res = self.client.patch(url, payload, format='json')
-        print(recipe.ingredients.all())
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertIn(ingredient2, recipe.ingredients.all())
         self.assertNotIn(ingredient1, recipe.ingredients.all())
