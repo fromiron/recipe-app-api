@@ -7,8 +7,11 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from .serializers import (RecipeSerializer, RecipeDetailSerializer,
-                          TagSerializer, IngredientSerializer, RecipeImageSerializer)
+from .serializers import (
+    RecipeSerializer, RecipeDetailSerializer,
+    TagSerializer, IngredientSerializer,
+    RecipeImageSerializer
+)
 
 
 class RecipeViewSet(viewsets.ModelViewSet):

@@ -359,7 +359,6 @@ class PrivateRecipeApiTests(TestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(recipe.ingredients.count(), 0)
 
-
     def test_filter_by_tags(self):
         """Test filtering recipes by tags."""
         r1 = create_recipe(user=self.user, title='Thai Vegetable Curry')
@@ -380,7 +379,6 @@ class PrivateRecipeApiTests(TestCase):
         self.assertIn(s2.data, res.data)
         self.assertNotIn(s3.data, res.data)
 
-
     def test_filter_by_ingredients(self):
         """Test filtering recipes by ingredients."""
         r1 = create_recipe(user=self.user, title='Posh Beans on Toast')
@@ -395,15 +393,8 @@ class PrivateRecipeApiTests(TestCase):
         res = self.client.get(RECIPES_URL, params)
 
         s1 = RecipeSerializer(r1)
-
         s2 = RecipeSerializer(r2)
         s3 = RecipeSerializer(r3)
-
-
-        print('==========================res data================================')
-        print(res.data)
-        print('==========================================================')
-
         self.assertIn(s1.data, res.data)
         self.assertIn(s2.data, res.data)
         self.assertNotIn(s3.data, res.data)
