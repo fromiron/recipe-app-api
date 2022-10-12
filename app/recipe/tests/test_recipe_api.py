@@ -2,11 +2,11 @@
 tests for recipe apis
 """
 
-import tempfile
 import os
+import tempfile
 from decimal import Decimal
-from PIL import Image
 
+from PIL import Image
 from core.models import Recipe, Tag, Ingredient
 from django.contrib.auth import get_user_model
 from django.test import TestCase
@@ -25,8 +25,8 @@ def detail_url(recipe_id):
 
 
 def image_upload_url(recipe_id):
-    """Create and return a image upload URL """
-    return reverse('recipe:image-upload-image', args=[recipe_id])
+    """Create and return an image upload URL """
+    return reverse('recipe:recipe-upload-image', args=[recipe_id])
 
 
 def create_recipe(user, **params):
@@ -390,8 +390,6 @@ class ImageUploadTest(TestCase):
     def test_upload_image_bad_request(self):
         """test uploading invalid image"""
         url = image_upload_url(self.recipe.id)
-        payload = {'image':'notaimage'}
+        payload = {'image': 'notaimage'}
         res = self.client.post(url, payload, format='multipart')
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
-
-
