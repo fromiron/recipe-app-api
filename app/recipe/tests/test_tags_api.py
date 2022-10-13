@@ -2,6 +2,7 @@
 tests for the tags apis
 """
 from decimal import Decimal
+
 from core.models import Tag, Recipe
 from django.contrib.auth import get_user_model
 from django.test import TestCase
@@ -100,7 +101,7 @@ class PrivateTagsApiTests(TestCase):
             user=self.user,
         )
         recipe.tags.add(tag1)
-        res = self.client.get(TAGS_URL, {'assigned_only':1})
+        res = self.client.get(TAGS_URL, {'assigned_only': 1})
         s1 = TagSerializer(tag1)
         s2 = TagSerializer(tag2)
         self.assertIn(s1.data, res.data)
@@ -125,6 +126,6 @@ class PrivateTagsApiTests(TestCase):
         recipe1.tags.add(tag)
         recipe2.tags.add(tag)
 
-        res = self.client.get(TAGS_URL, {'assigned_only':1})
+        res = self.client.get(TAGS_URL, {'assigned_only': 1})
         self.assertEqual(res.status_code, 200)
         self.assertEqual(len(res.data), 1)
