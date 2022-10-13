@@ -8,16 +8,16 @@ stop:
 	docker-compose stop
 
 test:
-	docker-compose run --rm app sh -c "python manage.py test"
+	docker-compose run --rm dev-app sh -c "python manage.py test"
 
 lint:
-	docker-compose run --rm app sh -c "flake8"
+	docker-compose run --rm dev-app sh -c "flake8"
 
 cmd:
-	docker-compose run --rm app sh -c "$(c)"
+	docker-compose run --rm dev-app sh -c "$(c)"
 
 pmd:
-	docker-compose run --rm app sh -c "python manage.py $(c)"
+	docker-compose run --rm dev-app sh -c "python manage.py $(c)"
 
 flake:
-	docker-compose run --rm app sh -c "flake8"
+	docker-compose run --rm dev-app sh -c "flake8"

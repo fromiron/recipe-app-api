@@ -1,11 +1,12 @@
 version: "3.9"
 
 services:
-  app:
+  dev-app:
     build:
       context: .
       args:
         - DEV=true
+    container_name: dev-app
     ports:
       - "8000:8000"
     volumes:
@@ -22,10 +23,11 @@ services:
       - DB_PASS=changeme
       - DEBUG=1
     depends_on:
-      - db
+      - dev-db
 
-  db:
+  dev-db:
     image: postgres:13-alpine
+    container_name: dev-db
     volumes:
       - dev-db-data:/var/lib/postgresql/data
     environment:
