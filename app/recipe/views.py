@@ -1,9 +1,8 @@
 """views for the recipe apis"""
 
 from core.models import Recipe, Tag, Ingredient
-from drf_spectacular.types import OpenApiTypes
 from drf_spectacular.utils import (
-    extend_schema_view, extend_schema, OpenApiParameter
+    extend_schema_view, extend_schema, OpenApiParameter, OpenApiTypes
 )
 from rest_framework import viewsets, mixins, status
 from rest_framework.authentication import TokenAuthentication
@@ -24,13 +23,13 @@ from .serializers import (
             OpenApiParameter(
                 'tags',
                 OpenApiTypes.STR,
-                description='Comma separated list of tags IDs to filter'
+                description='Comma separated list of tag IDs to filter',
             ),
             OpenApiParameter(
                 'ingredients',
                 OpenApiTypes.STR,
-                description='Comma separated list ingredients IDs to filter'
-            )
+                description='Comma separated list of ingredient IDs to filter',
+            ),
         ]
     )
 )
@@ -42,11 +41,11 @@ class RecipeViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def _params_to_ints(self, qs):
-        """convert a list of strings to integers"""
+        """Convert a list of strings to integers."""
         return [int(str_id) for str_id in qs.split(',')]
 
     def get_queryset(self):
-        """retrieve recipes for authenticated user"""
+        """Retrieve recipes for authenticated user."""
         tags = self.request.query_params.get('tags')
         ingredients = self.request.query_params.get('ingredients')
         queryset = self.queryset
@@ -56,6 +55,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         if ingredients:
             ingredient_ids = self._params_to_ints(ingredients)
             queryset = queryset.filter(ingredients__id__in=ingredient_ids)
+
         return queryset.filter(
             user=self.request.user
         ).order_by('-id').distinct()
@@ -92,8 +92,8 @@ class RecipeViewSet(viewsets.ModelViewSet):
             OpenApiParameter(
                 'assigned_only',
                 OpenApiTypes.INT, enum=[0, 1],
-                description='Filter by items assigned to recipes',
-            )
+                description='Filter by items assigned to recipes.',
+            ),
         ]
     )
 )
@@ -106,25 +106,26 @@ class BaseRecipeAttrViewSet(mixins.DestroyModelMixin,
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        """filter queryset to authenticated user"""
+        """Filter queryset to authenticated user."""
         assigned_only = bool(
             int(self.request.query_params.get('assigned_only', 0))
         )
         queryset = self.queryset
         if assigned_only:
             queryset = queryset.filter(recipe__isnull=False)
+
         return queryset.filter(
             user=self.request.user
         ).order_by('-name').distinct()
 
 
 class TagViewSet(BaseRecipeAttrViewSet):
-    """manage tags in the database"""
+    """Manage tags in the database."""
     serializer_class = TagSerializer
     queryset = Tag.objects.all()
 
 
 class IngredientViewSet(BaseRecipeAttrViewSet):
-    """Manage ingredients in the database"""
+    """Manage ingredients in the database."""
     serializer_class = IngredientSerializer
     queryset = Ingredient.objects.all()
